@@ -20,7 +20,7 @@ Apertura del backoffice: http://localhost:8080 (username: `admin`, password: `ad
 
 Apertura della UI per Kafka: http://localhost:18080/ (topic `payment-requests`)
 
-Utilizzo della collection Postman per invocare le operazioni API (`queuePaymentRequest` e `readPaymentRequest`)
+Utilizzo della collection Postman (file `Payment Gateway.postman_collection.json` nella root del repository) per invocare le operazioni API (`queuePaymentRequest` e `readPaymentRequest`)
 
 Specifica OpenAPI delle API REST del servizio: file `api.yml` nel percorso `payment-gateway-api/src/main/resources/swagger`.
 
