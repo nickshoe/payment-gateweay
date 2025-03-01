@@ -1,0 +1,11 @@
+id;external_id;transaction_id;credit_card_number;credit_card_holder;credit_card_security_code;amount;created_at;updated_at;status;result
+1;failing poetry;overcharge yet publicity;toward now upon;fiddle;cap though;24083.75;2025-02-28T08:43:41;2025-02-28T16:15:07;NEW;SUCCESS
+2;strange;oval;loyally aw in;um however carpool;until elementary extremely;2432.97;2025-02-28T01:52:31;2025-02-28T11:55:02;TERMINATED;FAILURE
+3;but;intently;jubilantly;bashfully;snoop;27799.14;2025-02-28T08:23:19;2025-02-28T12:08:30;READY;FAILURE
+4;as except;enthusiastically;flu oof ack;minus commodity crossly;successfully;7587.69;2025-02-28T04:48:21;2025-02-27T19:50:17;TERMINATED;FAILURE
+5;spectate pry;eek near;er meh;aha;sleepy;29244.96;2025-02-27T22:19:15;2025-02-28T03:33:26;TERMINATED;FAILURE
+6;solemnly;soon boo till;brr brr whoa;fixed woot;so;25148.4;2025-02-28T08:20:29;2025-02-28T09:16:47;RUNNING;FAILURE
+7;of gnaw hence;oh;or which unwilling;pro sweetly;carefree before;12746.84;2025-02-28T16:34:43;2025-02-27T18:29:20;TERMINATED;SUCCESS
+8;against insist;until polyester assured;pension;biodegrade out quickly;supportive;30748.35;2025-02-27T22:02:13;2025-02-28T11:42:08;TERMINATED;FAILURE
+9;for;strictly expatiate worth;silver highly ick;yahoo;honestly as splash;21556.19;2025-02-28T05:12:21;2025-02-28T06:30:49;NEW;FAILURE
+10;atop ha incidentally;an so;brr;expansion detective grave;nor;5305.43;2025-02-28T12:12:00;2025-02-28T12:48:16;TERMINATED;FAILURE

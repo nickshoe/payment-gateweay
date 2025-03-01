@@ -1,0 +1,15 @@
+# This configuration is intended for development purpose, it's **your** responsibility to harden it for production
+name: paymentgatewayapi
+services:
+  postgresql:
+    extends:
+      file: ./postgresql.yml
+      service: postgresql
+  kafka:
+    extends:
+      file: ./kafka.yml
+      service: kafka
+  kafka-ui:
+    extends:
+      file: ./kafka-ui.yml
+      service: kafka-ui

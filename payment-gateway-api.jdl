@@ -1,0 +1,28 @@
+entity Payment {
+	externalId String required unique
+    transactionId String required unique
+    creditCardNumber String required
+    creditCardHolder String required
+    creditCardSecurityCode String required
+    amount BigDecimal required
+    createdAt Instant
+    updatedAt Instant
+    status PaymentStatus
+    result PaymentResult
+}
+
+enum PaymentStatus {
+	NEW, READY, RUNNING, TERMINATED
+}
+
+enum PaymentResult {
+	SUCCESS, FAILURE
+}
+
+use infinite-scroll for Payment
+
+// Use Data Transfer Objects (DTO)
+use mapstruct for *
+
+// Set service options to all except few
+use serviceImpl for *

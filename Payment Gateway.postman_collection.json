@@ -1,0 +1,93 @@
+{
+	"info": {
+		"_postman_id": "4a85dfee-3210-4dd8-8a4f-5fc4bf5cfa2a",
+		"name": "Payment Gateway",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31109394"
+	},
+	"item": [
+		{
+			"name": "queuePaymentRequest",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTc0MDg1MTQzMCwiYXV0aCI6IlJPTEVfQURNSU4gUk9MRV9VU0VSIiwiaWF0IjoxNzQwNzY1MDMwfQ.PQ5quvpTN_5nkEmfFlvN8YCDVDmfT0YPmj5r7EH_8zT5LpNEqZQrmj6_W3hbAASvcKmlRF78OIP6LAzkuW9o-A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"transaction_id\": \"40a80a1d-d874-43ec-a84f-e8089188eb28\",\n  \"credit_card_info\": {\n    \"number\": \"4032032241726550\",\n    \"holder\": \"John Doe\",\n    \"security_code\": \"708\"\n  },\n  \"amount\": \"5.90\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/payments-requests/352d9266-fae2-40c2-a0fc-11de4ebe70cc",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"payments-requests",
+						"352d9266-fae2-40c2-a0fc-11de4ebe70cc"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "readPaymentRequest",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTc0MDg1MTQzMCwiYXV0aCI6IlJPTEVfQURNSU4gUk9MRV9VU0VSIiwiaWF0IjoxNzQwNzY1MDMwfQ.PQ5quvpTN_5nkEmfFlvN8YCDVDmfT0YPmj5r7EH_8zT5LpNEqZQrmj6_W3hbAASvcKmlRF78OIP6LAzkuW9o-A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"transaction_id\": \"40a80a1d-d874-43ec-a84f-e8089188eb28\",\n  \"credit_card_info\": {\n    \"number\": \"4032032241726550\",\n    \"holder\": \"John Doe\",\n    \"security_code\": \"708\"\n  },\n  \"amount\": \"5.90\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/payments-requests/352d9266-fae2-40c2-a0fc-11de4ebe70cc",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"payments-requests",
+						"352d9266-fae2-40c2-a0fc-11de4ebe70cc"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

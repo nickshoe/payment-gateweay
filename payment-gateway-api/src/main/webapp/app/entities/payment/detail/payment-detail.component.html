@@ -1,0 +1,72 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (payment(); as paymentRef) {
+      <div>
+        <h2 data-cy="paymentDetailsHeading"><span>Payment</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span>ID</span></dt>
+          <dd>
+            <span>{{ paymentRef.id }}</span>
+          </dd>
+          <dt><span>External Id</span></dt>
+          <dd>
+            <span>{{ paymentRef.externalId }}</span>
+          </dd>
+          <dt><span>Transaction Id</span></dt>
+          <dd>
+            <span>{{ paymentRef.transactionId }}</span>
+          </dd>
+          <dt><span>Credit Card Number</span></dt>
+          <dd>
+            <span>{{ paymentRef.creditCardNumber }}</span>
+          </dd>
+          <dt><span>Credit Card Holder</span></dt>
+          <dd>
+            <span>{{ paymentRef.creditCardHolder }}</span>
+          </dd>
+          <dt><span>Credit Card Security Code</span></dt>
+          <dd>
+            <span>{{ paymentRef.creditCardSecurityCode }}</span>
+          </dd>
+          <dt><span>Amount</span></dt>
+          <dd>
+            <span>{{ paymentRef.amount }}</span>
+          </dd>
+          <dt><span>Created At</span></dt>
+          <dd>
+            <span>{{ paymentRef.createdAt | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span>Updated At</span></dt>
+          <dd>
+            <span>{{ paymentRef.updatedAt | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span>Status</span></dt>
+          <dd>
+            <span>{{
+              { null: '', NEW: 'NEW', READY: 'READY', RUNNING: 'RUNNING', TERMINATED: 'TERMINATED' }[paymentRef.status ?? 'null']
+            }}</span>
+          </dd>
+          <dt><span>Result</span></dt>
+          <dd>
+            <span>{{ { null: '', SUCCESS: 'SUCCESS', FAILURE: 'FAILURE' }[paymentRef.result ?? 'null'] }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/payment', paymentRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>
