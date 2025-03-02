@@ -2,26 +2,32 @@ package com.mycompany.myapp.service.impl;
 
 import com.mycompany.myapp.service.BankGatewayService;
 import com.mycompany.myapp.service.dto.PaymentDTO;
+import org.apache.commons.collections4.map.HashedMap;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Map;
 
 @Service
 public class BankGatewayServiceImpl implements BankGatewayService {
 
-    // Here I'm using a Set in the Hypothesis that the Bank Gateway payment processing method is indeed idempotent
-    final Set<String> processedTransactionsIds = new HashSet<>();
+    // Here I'm using a Map in the Hypothesis that the Bank Gateway payment processing method is indeed idempotent
+    // Obviously, this state should be persisted across restarts
+    final Map<String, Boolean> processedTransactions = new HashedMap<>();
 
     @Override
     public boolean paymentExists(PaymentDTO paymentDTO) {
-        return processedTransactionsIds.contains(paymentDTO.getTransactionId());
+        return processedTransactions.containsKey(paymentDTO.getTransactionId());
+    }
+
+    @Override
+    public boolean paymentSucceeded(PaymentDTO paymentDTO) {
+        return processedTransactions.get(paymentDTO.getTransactionId());
     }
 
     @Override
     public void createPayment(PaymentDTO paymentDTO) {
         // This method could throw an Exception if the actual BG API service returns an error code (idempotency)
-        processedTransactionsIds.add(paymentDTO.getTransactionId());
+        processedTransactions.put(paymentDTO.getTransactionId(), true);
     }
 
 }

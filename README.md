@@ -4,10 +4,16 @@
 
 ## Avvio
 
-Build dell'immagine Docker dell'applicazione
+Build dell'immagine Docker dell'applicazione (il demone Docker dev'essere già in esecuzione)
 
 ```bash
 npm run java:docker
+```
+
+Aggiungere la seguente entry nell'host file di Linux/Windows:
+
+```
+127.0.0.1	kafka
 ```
 
 Lancio della soluzione:
@@ -20,7 +26,10 @@ Apertura del backoffice: http://localhost:8080 (username: `admin`, password: `ad
 
 Apertura della UI per Kafka: http://localhost:18080/ (topic `payment-requests`)
 
-Utilizzo della collection Postman (file `Payment Gateway.postman_collection.json` nella root del repository) per invocare le operazioni API (`queuePaymentRequest` e `readPaymentRequest`)
+Utilizzo della collection Postman (file `Payment Gateway.postman_collection.json` nella root del repository):
+
+- autenticazione tramite JWT bearer token, ottenibile tramite l'operazione `authenticate`
+- per invocare operazione API (`queuePaymentRequest` e `readPaymentRequest`), impostare il token ottenuto in precedenza
 
 Specifica OpenAPI delle API REST del servizio: file `api.yml` nel percorso `payment-gateway-api/src/main/resources/swagger`.
 
@@ -34,6 +43,7 @@ Vedere diagramma `architecture.drawio` nella root del repository.
 
 - Java &ge; 17
   
+- Node.js &ge; 22 / NPM &ge; 10
 - Maven
 - PostgreSQL (out-of-the-box con JHipster)
 - Docker
@@ -125,7 +135,7 @@ Vedere diagramma `architecture.drawio` nella root del repository.
 
     - l'obiettivo è che il BG processi il pagamento una e una sola volta e che il PG filtri eventuali chiamate ripetute per lo stesso pagamento provenienti dal client
 
-    - se il BG espone una funzione non idempotente per il pagamento, il che significa che chiamate ripetute all'operazione di pagamento fanno sì che vengano effettivamente eseguiti più pagamenti, il sistema potrebbe perdere consistenza (non ha senso considerare legittima la possibilità di accettare più pagamenti per lo stesso ordine); questo potrebbe verificarsi se il PG dovesse rompersi subito dopo la ricezione della conferma di pagamento dal BG e prima di rendere persistente il cambio di stato localmente e di aver effettuato il *commit* verso il broker, cosicché ad un riavvio del PG la stessa richiesta di pagamento verrebbe sottoposta nuovamente al BG; in questo contesto, l'unico modo per ripristinare la consistenza sarebbe tramite un intervento manuale sui sistemi a fronte di un'eventuale segnalazione da parte dell'utente;
+    - se il BG espone una funzione non idempotente per il pagamento, il che significa che chiamate ripetute all'operazione di pagamento fanno sì che vengano effettivamente eseguiti più pagamenti; questo potrebbe verificarsi se il PG dovesse rompersi subito dopo la ricezione della conferma di pagamento dal BG e prima di rendere persistente il cambio di stato localmente e di aver effettuato il *commit* di consumo del messaggio verso il broker, cosicché ad un riavvio del PG la stessa richiesta di pagamento verrebbe sottoposta nuovamente al BG; in questo contesto, l'unico modo per ripristinare la consistenza sarebbe tramite un intervento manuale sui sistemi a fronte di un'eventuale segnalazione da parte dell'utente;
 
     - per far sì che il sistema raggiunga la consistenza nel tempo (i.e. *eventual consistency*), è necessario che il BG esponga una funzione di pagamento idempotente (es. la prima chiamata crea il pagamento, le chiamate successive ritornano un errore); oppure ipotizzando che il BG esponga un'ulteriore operazione per la sola verifica dell'avvenuto pagamento dato un identificativo esterno (es. il `transactionId`, oppure il `paymentId`, l'importante è che identifichi in modo univoco il pagamento e che sia sempre lo stesso), anche se in questo caso si rende necessaria una transazione distribuita che includa i due sistemi (es. tramite il protocollo *two-phase commit*), ma questo è deleterio dal punto di vista delle performance ed è un meccanismo piuttosto fragile.
 

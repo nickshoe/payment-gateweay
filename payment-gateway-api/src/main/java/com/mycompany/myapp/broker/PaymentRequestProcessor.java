@@ -35,7 +35,6 @@ public class PaymentRequestProcessor implements Consumer<Message<PaymentDTO>> {
         LOG.debug("Got payment request from queue: {}", paymentDTO);
 
         LOG.debug("Starting to process the payment request: {}", paymentDTO);
-
         paymentDTO.setStatus(PaymentStatus.RUNNING);
 
         // the upstream Bank Gateway service createPayment operation is not idempotent
@@ -43,9 +42,19 @@ public class PaymentRequestProcessor implements Consumer<Message<PaymentDTO>> {
 
         // hypothesis: Bank Gateway service provide a method to check if a payment had already been processed
         if (bankGatewayService.paymentExists(paymentDTO)) {
-            return;
+            handleAlreadyProcessedPaymentRequest(paymentDTO);
+        } else {
+            processPaymentRequest(paymentDTO);
         }
 
+        paymentDTO.setStatus(PaymentStatus.TERMINATED);
+        paymentDTO.setUpdatedAt(Instant.now());
+        paymentService.save(paymentDTO);
+
+        ackMessage(message);
+    }
+
+    private void processPaymentRequest(PaymentDTO paymentDTO) {
         try {
             bankGatewayService.createPayment(paymentDTO);
 
@@ -56,15 +65,19 @@ public class PaymentRequestProcessor implements Consumer<Message<PaymentDTO>> {
             LOG.error("Payment request processing has failed: {}", paymentDTO);
 
             paymentDTO.setResult(PaymentResult.FAILURE);
-        } finally {
-            paymentDTO.setStatus(PaymentStatus.TERMINATED);
         }
+    }
 
-        paymentDTO.setUpdatedAt(Instant.now());
+    private void handleAlreadyProcessedPaymentRequest(PaymentDTO paymentDTO) {
+        if (bankGatewayService.paymentSucceeded(paymentDTO)) {
+            LOG.error("Payment request was already processed and succeeded: {}", paymentDTO);
 
-        paymentService.save(paymentDTO);
+            paymentDTO.setResult(PaymentResult.SUCCESS);
+        } else {
+            LOG.error("Payment request was already processed and failed: {}", paymentDTO);
 
-        ackMessage(message);
+            paymentDTO.setResult(PaymentResult.FAILURE);
+        }
     }
 
     private static void ackMessage(Message<?> message) {

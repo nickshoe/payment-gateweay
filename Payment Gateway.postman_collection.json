@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "4a85dfee-3210-4dd8-8a4f-5fc4bf5cfa2a",
+		"_postman_id": "db66c51f-5b12-41f7-9481-33efab93d2b5",
 		"name": "Payment Gateway",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "31109394"
@@ -14,7 +14,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTc0MDg1MTQzMCwiYXV0aCI6IlJPTEVfQURNSU4gUk9MRV9VU0VSIiwiaWF0IjoxNzQwNzY1MDMwfQ.PQ5quvpTN_5nkEmfFlvN8YCDVDmfT0YPmj5r7EH_8zT5LpNEqZQrmj6_W3hbAASvcKmlRF78OIP6LAzkuW9o-A",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTc0MTAxNDEwNSwiYXV0aCI6IlJPTEVfQURNSU4gUk9MRV9VU0VSIiwiaWF0IjoxNzQwOTI3NzA1fQ.zOvX1Nl1v4N3MR6vL5ZjuL20RJHPdFwqBQApiDiTu_iR8FGKonc2kjxDsGUwmRdDyYNKDgYmMh0gkj5lXRYkyA",
 							"type": "string"
 						}
 					]
@@ -84,6 +84,38 @@
 						"api",
 						"payments-requests",
 						"352d9266-fae2-40c2-a0fc-11de4ebe70cc"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "authenticate",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"admin\",\n    \"password\": \"admin\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/authenticate",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"authenticate"
 					]
 				}
 			},
